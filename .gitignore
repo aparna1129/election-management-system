@@ -1,0 +1,25 @@
+# Root-level node_modules
+/node_modules/
+
+# Client-side node_modules
+/client/node_modules/
+
+/server/node_modules/
+
+# Environment variables
+*.env
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/
