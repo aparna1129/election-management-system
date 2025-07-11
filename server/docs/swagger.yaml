@@ -1,0 +1,408 @@
+openapi: 3.0.0
+info:
+  title: Election Management API
+  description: API for managing elections, candidates, voters, and votes, and queries.
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /elections:
+    get:
+      summary: Get all elections
+      description: Retrieve a list of all elections.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Election'
+    post:
+      summary: Create a new election
+      description: Add a new election to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Election'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+
+  /elections/{id}:
+    get:
+      summary: Get election by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found
+        '404':
+          description: Not Found
+    put:
+      summary: Update election by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Election'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete election by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Not Found
+
+  /candidates:
+    get:
+      summary: Get all candidates
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create candidate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+      responses:
+        '201':
+          description: Created
+
+  /candidates/{id}:
+    get:
+      summary: Get candidate by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found
+        '404':
+          description: Not Found
+    put:
+      summary: Update candidate by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete candidate by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Not Found
+
+  /voters:
+    get:
+      summary: Get all voters
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create voter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Voter'
+      responses:
+        '201':
+          description: Created
+
+  /voters/{id}:
+    get:
+      summary: Get voter by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found
+        '404':
+          description: Not Found
+    put:
+      summary: Update voter by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Voter'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete voter by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Not Found
+
+  /votes:
+    get:
+      summary: Get all votes
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create vote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+      responses:
+        '201':
+          description: Created
+
+  /votes/{id}:
+    get:
+      summary: Get vote by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found
+        '404':
+          description: Not Found
+    put:
+      summary: Update vote by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete vote by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Not Found
+
+  /queries/1-parliament-candidates:
+    get:
+      summary: Parliament election candidates
+      description: Fetch all candidates standing for parliament election.
+      responses:
+        '200':
+          description: Success
+
+  /queries/2-candidate-count:
+    get:
+      summary: Candidate count per election
+      description: Fetch count of all candidates standing in each election.
+      responses:
+        '200':
+          description: Success
+
+  /queries/3-parliament-gender-count:
+    get:
+      summary: Gender count for parliament candidates
+      description: Count of male and female candidates in parliament election.
+      responses:
+        '200':
+          description: Success
+
+  /queries/4-female-voters/:id:
+    get:
+      summary: Female voters for specific candidate
+      description: Fetch all female voters who voted for a specific candidate.
+      responses:
+        '200':
+          description: Success
+
+  /queries/5-votes-per-candidate:
+    get:
+      summary: Vote count per candidate
+      responses:
+        '200':
+          description: Success
+
+  /queries/6-votes-parliament-candidates:
+    get:
+      summary: Vote count in parliament
+      responses:
+        '200':
+          description: Success
+
+  /queries/7-parliament-candidates-over-50:
+    get:
+      summary: Parliament candidates aged 50+
+      responses:
+        '200':
+          description: Success
+
+  /queries/8-male-voters-over-50-parliament:
+    get:
+      summary: Male voters aged 50+ in parliament
+      responses:
+        '200':
+          description: Success
+
+components:
+  schemas:
+    Election:
+      type: object
+      properties:
+        election_id:
+          type: integer
+        election_type:
+          type: string
+
+    Candidate:
+      type: object
+      properties:
+        cand_id:
+          type: integer
+        cand_fname:
+          type: string
+        cand_lname:
+          type: string
+        c_gender:
+          type: string
+          enum: [Male, Female, Other]
+        c_dob:
+          type: string
+          format: date
+        c_aadhar:
+          type: string
+        c_email:
+          type: string
+        c_contact:
+          type: string
+        election_logo:
+          type: string
+        election_id:
+          type: integer
+
+    Voter:
+      type: object
+      properties:
+        voter_id:
+          type: integer
+        voter_fname:
+          type: string
+        voter_lname:
+          type: string
+        v_gender:
+          type: string
+          enum: [Male, Female, Other]
+        v_dob:
+          type: string
+          format: date
+        v_aadhar:
+          type: string
+        v_email:
+          type: string
+        v_contact:
+          type: string
+
+    Vote:
+      type: object
+      properties:
+        votes_id:
+          type: integer
+        voter_id:
+          type: integer
+        cand_id:
+          type: integer
+        election_id:
+          type: integer
